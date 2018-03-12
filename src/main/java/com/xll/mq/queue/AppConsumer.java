@@ -4,19 +4,22 @@ import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.MessageProducer;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-/**队列模式
- * @ClassName: AppProducer
- * @Description: 消息发送者
+ /** 队列模式
+ * @ClassName: AppConsumer 
+ * @Description:消息接收者 
  * @author: XieLulin
- * @date: 2018年3月12日 下午9:03:16
+ * @date: 2018年3月12日 下午10:12:11  
  */
-public class AppProducer {
+public class AppConsumer {
+
 	private static final String url = "tcp://192.168.1.106:61616";
 	private static final String queueName = "firtQueue";
 
@@ -39,29 +42,25 @@ public class AppProducer {
 			// 5.创建一个目标
 			Destination destination = session.createQueue(queueName);
 
-			// 6.创建一个生产者
-			MessageProducer producer = session.createProducer(destination);
-
-			for (int i = 0; i < 100; i++) {
-				// 7.创建消息
-				TextMessage message = session.createTextMessage("text:" + i);
-				producer.send(message);
-				System.out.println("发送消息：" + message.getText());
-			}
+			// 6.创建一个消费者
+			MessageConsumer consumer = session.createConsumer(destination);
+			consumer.setMessageListener(new MessageListener() {
+				
+				@Override
+				public void onMessage(Message message) {
+					TextMessage textMessage = (TextMessage) message;
+					try {
+						System.out.println("接收到的message:"+textMessage.getText());
+					} catch (JMSException e) {
+						e.printStackTrace();
+					}
+				}
+			});
 
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			// 9.关闭连接
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
-			}
+		}  
 
-		}
 	}
+
 }
