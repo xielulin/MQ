@@ -8,6 +8,7 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 /**队列模式
@@ -17,12 +18,14 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * @date: 2018年3月12日 下午9:03:16
  */
 public class AppProducer {
-	private static final String url = "tcp://192.168.1.106:61616";
-	private static final String queueName = "firtQueue";
+	//mq url地址
+	private static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
+	//队列名
+	private static final String QUEUE_NAME = "firstQueue";
 
 	public static void main(String[] args) {
 		// 1.创建ConnectionFactory
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
 
 		// 2. 创建Connection
 		Connection connection = null;
@@ -37,7 +40,7 @@ public class AppProducer {
 					Session.AUTO_ACKNOWLEDGE);
 
 			// 5.创建一个目标
-			Destination destination = session.createQueue(queueName);
+			Destination destination = session.createQueue(QUEUE_NAME);
 
 			// 6.创建一个生产者
 			MessageProducer producer = session.createProducer(destination);

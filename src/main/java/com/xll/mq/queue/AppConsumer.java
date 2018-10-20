@@ -10,6 +10,7 @@ import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
  /** 队列模式
@@ -20,12 +21,14 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  */
 public class AppConsumer {
 
-	private static final String url = "tcp://192.168.1.106:61616";
-	private static final String queueName = "firtQueue";
+	 //mq url地址
+	 private static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
+	 //主题名
+	 private static final String TOPIC_NAME = "firstTopic";
 
 	public static void main(String[] args) {
 		// 1.创建ConnectionFactory
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
 
 		// 2. 创建Connection
 		Connection connection = null;
@@ -40,7 +43,7 @@ public class AppConsumer {
 					Session.AUTO_ACKNOWLEDGE);
 
 			// 5.创建一个目标
-			Destination destination = session.createQueue(queueName);
+			Destination destination = session.createQueue(TOPIC_NAME);
 
 			// 6.创建一个消费者
 			MessageConsumer consumer = session.createConsumer(destination);

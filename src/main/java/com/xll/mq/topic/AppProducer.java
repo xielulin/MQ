@@ -18,13 +18,12 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * @date: 2018年3月12日 下午9:03:16
  */
 public class AppProducer {
-	private static final String url = ActiveMQConnection.DEFAULT_BROKER_URL;
-	private static final String urls = "tcp://192.168.1.106:61616";
+	private static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
 	private static final String topicName = "firtTopic";
 
 	public static void main(String[] args) {
 		// 1.创建ConnectionFactory
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
 
 		// 2. 创建Connection
 		Connection connection = null;
@@ -52,7 +51,6 @@ public class AppProducer {
 			}
 
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			// 9.关闭连接

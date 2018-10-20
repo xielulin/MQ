@@ -20,8 +20,10 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * @date: 2018年3月12日 下午10:12:11  
  */
 public class AppConsumer {
-	private static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
-	private static final String topicName = "firtTopic";
+     //mq url地址
+     private static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
+     //主题名
+     private static final String TOPIC_NAME = "firstTopic";
 
 	public static void main(String[] args) {
 		// 1.创建ConnectionFactory
@@ -40,7 +42,7 @@ public class AppConsumer {
 					Session.AUTO_ACKNOWLEDGE);
 
 			// 5.创建一个目标
-			Destination destination = session.createTopic(topicName);
+			Destination destination = session.createTopic(TOPIC_NAME);
 
 			// 6.创建一个消费者
 			MessageConsumer consumer = session.createConsumer(destination);
