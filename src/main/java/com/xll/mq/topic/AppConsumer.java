@@ -10,6 +10,7 @@ import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
  /** 主题模式
@@ -19,13 +20,12 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * @date: 2018年3月12日 下午10:12:11  
  */
 public class AppConsumer {
-
-	private static final String url = "tcp://192.168.1.106:61616";
+	private static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
 	private static final String topicName = "firtTopic";
 
 	public static void main(String[] args) {
 		// 1.创建ConnectionFactory
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(URL);
 
 		// 2. 创建Connection
 		Connection connection = null;
